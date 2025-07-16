@@ -1,0 +1,33 @@
+h1 {
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+    margin: 2em auto;
+}
+
+body {
+    max-width: 700px;
+    width: 100%;
+    margin: 1em auto;
+    text-align: center;
+
+    font-family: sans-serif;
+
+    /* background: linear-gradient(to bottom, #fdfbfb, #ebedee); */
+
+    background-image: radial-gradient(#ccc 0.5px, transparent 0.5px);
+}
+
+h2 {
+    margin: 1em auto;
+    text-align: left;
+}
+
+p {
+    text-align: left;
+    font-size: large;
+}
+
+ul {
+    text-align: left;
+}

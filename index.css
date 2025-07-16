@@ -1,0 +1,115 @@
+/* Base reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Body styling */
+body {
+    font-family: "Fira Code", Menlo, Consolas, monospace;
+    background: #f5f5f5;
+    color: #2e2e2e;
+    line-height: 1.6;
+    padding: 2em 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Layout container */
+main {
+    background: #ffffff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    max-width: 720px;
+    width: 100%;
+    text-align: left;
+    margin: 2em auto;
+}
+
+/* Page title */
+header h1 {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 0.5em;
+    color: #222;
+}
+
+/* Post titles */
+article h2 {
+    font-size: 1.2em;
+    margin-top: 1.5em;
+    color: #444;
+}
+
+/* Paragraphs */
+p {
+    margin: 1em 0;
+}
+
+/* Code blocks */
+pre {
+    background: #272822;
+    color: #f8f8f2;
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 1em 0;
+}
+
+code {
+    background: #eeeeee;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.95em;
+}
+
+/* Links */
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Headings spacing */
+h1,
+h2,
+h3 {
+    font-weight: 600;
+    margin-bottom: 0.5em;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    body {
+        padding: 1em;
+    }
+
+    main {
+        padding: 1.5em;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+}
+
+pre.literal {
+    font-family: monospace;
+    font-size: 1em;
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    margin: 1em 0;
+    white-space: pre;
+    /* key: preserve all spacing and line breaks */
+    overflow-x: auto;
+    /* lets long lines scroll instead of wrapping */
+    border: none;
+    font-size: large;
+}

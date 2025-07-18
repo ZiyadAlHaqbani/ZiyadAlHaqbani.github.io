@@ -157,6 +157,7 @@
             problems, using the class feels awkward, and we can't use it meaningfully since we can't decrement numbers
             yet, nor can we perform large additions/substractions at once.
         </p>
+        </p>
         <h2>Part 2: decrementing</h2>
         <p>
             First we have to understand how to decrement, and what functionalities we need to add to make
@@ -219,7 +220,7 @@
         </p>
         <details class="source-container">
             <summary>View Source Code</summary>
-            <pre><code class="language-csharp" id="code-block-6"></code></pre>
+            <pre><code class="language-csharp" id="code-block-7"></code></pre>
         </details>
         <p>
             This had negligible effects on performance, proving once again, that
@@ -245,11 +246,96 @@
                 </p>
             </li>
         </ul>
+        <br>
+        <h2>Part 3: Summation and Comparison</h2>
+        <p>
+            The first and easier step right now is to do comparison, it also will make it clearer why the
+            'NaiveSum()' function performed so poorly.
+        </p>
+        <p>
+            To do that we will simply overload the '&gt;' and '&lt;' operators in C#, as it will give us a cleaner and
+            easier to use interface to compare two of our numbers, which leads us to wonder how we could start comparing
+            two numbers, if we can't use the previous hack to return a value representing our objects.
+        </p>
+        <p>
+            Visualizing the operations will help us see patterns and edge cases we might have not seen through
+            purely writing the solution in code:
+        </p>
+        <div class="imagewrapper"><img src="compare 1.png" alt=""></div>
+        <p>
+            We will start from most significant position to the least, so we can benefit from early exists where
+            we don't have to compare every single value in the internal list of both numbers, like in the
+            example where we return the result by merely finding the first different pair of numbers, since by necessity
+            this means that the lower number must be larger than the upper one, althought this approach will cause us
+            trouble
+            since we will have to handle more edge cases, which also help us in discovering more early exists.
+        </p>
+        <p>
+            The firs practical problem we have to solve is preceding zeros, since there is a possibility of a number
+            having its most significant position all the way to the first position be all zeros given the appropriate
+            set of operations performed on that number, so we have to skip all these numbers before doing any
+            comparison,
+            which is best shown through the code itself.
+        </p>
+        <details class="source-container">
+            <summary>View Source Code</summary>
+            <pre><code class="language-csharp" id="code-block-8"></code></pre>
+        </details>
+        <p>
+            After that we can benefit from our approach and do a very easy length check for both number
+            to see which is shorter, and therefore has the smaller/larger value, otherwise we do the final
+            check where we implement the example shown in the figure above, comparing the positions until
+            we find the first difference and return either true or false depending on whether we used '&gt;'
+            or '&lt;'.
+        </p>
+        <details class="source-container">
+            <summary>View Source Code</summary>
+            <pre><code class="language-csharp" id="code-block-9"></code></pre>
+        </details>
+        <p>
+            Running the performance test again, we see a huge improvement:
+        </p>
+        <p>
+            '123 + 654' went from ~5ms to ~3.5ms, while not great its still impressive
+            how optimizing a simple check boosted performance that much.
+        </p>
+        <p>
+            '1,000,000 + 1,000,000' thought went from ~700ms to...23ms! the overhead of
+            the check for large numbers seems to be much much more important, and we got
+            > 20x performance gains from getting rid of the previous hack.
+        </p>
+        <p>
+            While the comparison is technically not constant-time, i assume that
+            the early exits are going to be frequent enough that on average, it will
+            be a constant time operation.
+        </p>
+        <p>
+            After all this hard work, we can finally get rid of all the performance
+            benefits since we are going to reimplement summation itself to be
+            a constant time operation with no comparisons, which will hopefully make adding numbers of
+            different sizes not have the vast run times we see still.
+        </p>
+        <p>
+            The approach that most immediately came to me is sum every position and propogate
+            the carry to the next one, just like addition but with less assumptions and more edge
+            cases, although it shouldn't be nearly as complicated as the comparisons were(hopefully).
+        </p>
+        <p>
+            It's worth it to note that what we are doing right now is very similar to an operation
+            that happens in old CPUs, with a component called the
+            '<a href="https://en.wikipedia.org/wiki/Adder_(electronics)#Full_adder">Full adder</a>'.
+        </p>
+        <div class="imagewrapper"><img src="summation 1.png" alt=""></div>
+        <p>
+            We re-adapted the increment logic to work for adding large numbers, this approach also isn't
+            constant time, but it's as close as i can get it without having to do SIMD and bit-packing, which
+            will have problems since BCDs(Binary Coded Decimals) have boundries that don't align with how
+            bits are packed in a SIMD vector.
         </p>
 </body>
 
 <script>
-    let code_block_count = 7;
+    let code_block_count = 9;
     for (let index = 1; index <= code_block_count; index++) {
         fetch("source_" + index + ".cs")
             .then(res => res.text())

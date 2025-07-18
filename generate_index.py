@@ -6,15 +6,11 @@ blog_pages = ""
 
 for dir in dirs:
     blog_pages += f'''\n
-    <a href="pages/{dir}/{dir}.html">
-        <main>
-            <article>
-                <h2>
-                    {dir}
-                </h2>
-            </article>
-        </main>
-    </a>
+<main>
+    <article>
+        <h2><a href="pages/{dir}/index.html">{dir}</a></h2>
+    </article>
+</main>
     '''
 
 
@@ -34,11 +30,11 @@ index =f'''
         <h2>
             Description:
         </h2>
-
-        <pre class="literal">
+        
+        <h3>
             This blog will contain random topics about programming that
             i happen to be interested in at the moment.
-        </pre>
+        </h3>
     </header>
 </body>
 {blog_pages}

@@ -31,3 +31,25 @@ p {
 ul {
     text-align: left;
 }
+
+details {
+    box-shadow: 0 2px 8px black;
+}
+
+details:hover {
+    box-shadow: 0 4px 16px black;
+}
+
+.imagewrapper {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    aspect-ratio: initial;
+    overflow: hidden;
+    box-shadow: 0 4px 8px lightgray;
+}
+
+.imagewrapper img {
+    width: 100%;
+    height: 100%;
+}

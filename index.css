@@ -98,18 +98,3 @@ h3 {
         font-size: 2em;
     }
 }
-
-pre.literal {
-    font-family: monospace;
-    font-size: 1em;
-    background: transparent;
-    color: inherit;
-    padding: 0;
-    margin: 1em 0;
-    white-space: pre;
-    /* key: preserve all spacing and line breaks */
-    overflow-x: auto;
-    /* lets long lines scroll instead of wrapping */
-    border: none;
-    font-size: large;
-}

@@ -332,10 +332,29 @@
             will have problems since BCDs(Binary Coded Decimals) have boundries that don't align with how
             bits are packed in a SIMD vector.
         </p>
+        <details class="source-container">
+            <summary>View Source Code</summary>
+            <pre><code class="language-csharp" id="code-block-10"></code></pre>
+        </details>
+        <p>
+            This solution is almost-constant time, making it not blow up with larger numbers, and also happens
+            to be much faster, although sadly it's not as fast as i had hoped it would be:
+        </p>
+        <p>
+            '9,999,999 + 9,999,999' was done in ~280ms using 'NaiveSum()', this is especially bad
+            since the function scales with the value of the number to be added instead of the number of
+            positions, shown in '1,000,000,000 + 999,999,999' that took ~26,900ms!
+        </p>
+        <p>
+            '9,999,999 + 9,999,999' was done in ~3.5ms, great but still not the micro-second level performance
+            we might have expected, '1,000,000,000 + 999,999,999' was also done in ~3.5ms, proving that
+            'almost-constant' is a valid peformance measure.
+        </p>
+        <br>
 </body>
 
 <script>
-    let code_block_count = 9;
+    let code_block_count = 10;
     for (let index = 1; index <= code_block_count; index++) {
         fetch("source_" + index + ".cs")
             .then(res => res.text())

@@ -11,7 +11,63 @@
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-csharp.min.js"></script>
 
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        h1 {
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            margin: 2em auto;
+        }
+
+        body {
+            max-width: 700px;
+            width: 100%;
+            margin: 1em auto;
+            text-align: center;
+
+            font-family: sans-serif;
+
+            /* background: linear-gradient(to bottom, #fdfbfb, #ebedee); */
+
+            background-image: radial-gradient(#ccc 0.5px, transparent 0.5px);
+        }
+
+        h2 {
+            margin: 1em auto;
+            text-align: left;
+        }
+
+        p {
+            text-align: left;
+            font-size: large;
+        }
+
+        ul {
+            text-align: left;
+        }
+
+        details {
+            box-shadow: 0 2px 8px black;
+        }
+
+        details:hover {
+            box-shadow: 0 4px 16px black;
+        }
+
+        .imagewrapper {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            aspect-ratio: initial;
+            overflow: hidden;
+            box-shadow: 0 4px 8px lightgray;
+        }
+
+        .imagewrapper img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 
 <h1>
@@ -80,281 +136,391 @@
     </p>
     <br>
 
-    <h2>Part 1: Incrementing</h3>
+    <h2>Part 1: Incrementing</h2>
+    <p>
+        To eliminate the issue related to limited range number representations, we have to first create
+        a type that is made of something that we can grow and use easily, in this case an array will
+        suffice, but an array of what?
+    </p>
+    <ul>
         <p>
-            To eliminate the issue related to limited range number representations, we have to first create
-            a type that is made of something that we can grow and use easily, in this case an array will
-            suffice, but an array of what?
+            Possible types:
         </p>
-        <ul>
+        <li>
             <p>
-                Possible types:
+                String: has issues related to restricting users from putting
+                non-number characters in the string, and also writing all the arithmetic operations between
+                number strings isnt trivial, using a 'char' won't solve these problems either.
             </p>
-            <li>
-                <p>
-                    String: has issues related to restricting users from putting
-                    non-number characters in the string, and also writing all the arithmetic operations between
-                    number strings isnt trivial, using a 'char' won't solve these problems either.
-                </p>
-            </li>
-            <li>
-                <p>
-                    Integer: already implements arithmetic operations and is restricted to only number
-                    values, will also help us in optimizing our program in the future.
-                </p>
-            </li>
-        </ul>
+        </li>
+        <li>
+            <p>
+                Integer: already implements arithmetic operations and is restricted to only number
+                values, will also help us in optimizing our program in the future.
+            </p>
+        </li>
+    </ul>
 
-        <p>The first thing we must do is implement the base functionality, the requirements are simple:</p>
-        <ul>
-            <li>be able to describe any finite natural number</li>
-            <li>be able to increment that number</li>
-        </ul>
-        <p>Let's take a number: 1239, once incremented we expect to find: 1240, but we need
-            to first breakdown the steps to understand how we came to that conclusion.</p>
-        <p>First we breakdown the number into a list of digits, and sort it from largest
-            to smallest position magnitude</p>
-        <p>lastly, we will simply add one to the smallest position each time, like this:</p>
+    <p>The first thing we must do is implement the base functionality, the requirements are simple:</p>
+    <ul>
+        <li>be able to describe any finite natural number</li>
+        <li>be able to increment that number</li>
+    </ul>
+    <p>Let's take a number: 1239, once incremented we expect to find: 1240, but we need
+        to first breakdown the steps to understand how we came to that conclusion.</p>
+    <p>First we breakdown the number into a list of digits, and sort it from largest
+        to smallest position magnitude</p>
+    <p>lastly, we will simply add one to the smallest position each time, like this:</p>
 
-        <details class="source-container">
-            <summary>View Source Code</summary>
-            <pre><code class="language-csharp" id="code-block-1"></code></pre>
-        </details>
-        <br>
-        <div class="imagewrapper"><img src="increment 1.png" alt=""></div>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-1"></code></pre>
+    </details>
+    <br>
+    <div class="imagewrapper"><img src="increment 1.png" alt=""></div>
 
-        <p>We didn't take into account how the values would propogate between positions, meaning that now
-            we will have to detect and handle carries, like in a full adder by propogating it to the next position.
-        </p>
-        <p>For the sake of simplicity, we will use recursion to first increment the least significant position, and
-            then if we detect a carry, propogate the increment to the next position, until we either have no more
-            carries or the carry overflows and we can no longer propogate it due to our number's size.
-        </p>
-        <p>also, due to the way C# works, we will use a class to encapsulate logic to make it easier to work with.</p>
-        <details class="source-container">
-            <summary>View Source Code</summary>
-            <pre><code class="language-csharp" id="code-block-2"></code></pre>
-        </details>
-        <br>
-        <div class="imagewrapper"><img src="increment 2.png" alt=""></div>
-        <p>Great! Now we have solved the issues related to carry propogation, but if we look at the source
-            code, the number: 999 increments to 000, which is expected since it overflowed, but isn't that the
-            problem we were trying to solve in the first place?
-        </p>
-        <p>
-            We have to figure out how to expand our numbers dynamically, instead of having to guess how many
-            positions we need in our object before using it, this can be easily done by running a function 'expand()'
-            if we detect an overflow increment, and then increment the new position, which will require a rewrite
-            of some functions, since now the most significant number will be the one with the higher index, making
-            expansion trivial, and we will also make 'ToString()' return a normal number string.
-        </p>
-        <details class="source-container">
-            <summary>View Source Code</summary>
-            <pre><code class="language-csharp" id="code-block-3"></code></pre>
-        </details>
-        <p>
-            Now we can finally increment our objects until we have no more room in memory, but we still have
-            problems, using the class feels awkward, and we can't use it meaningfully since we can't decrement numbers
-            yet, nor can we perform large additions/substractions at once.
-        </p>
-        </p>
-        <h2>Part 2: decrementing</h2>
-        <p>
-            First we have to understand how to decrement, and what functionalities we need to add to make
-            decrementation possible, and the best first step is to solve the easiest case:
-            5 - 1 = 4
-            We will just subtract 1 from the least significant position, and we will end up with the correct
-            result.
-        </p>
-        <p>From now on we will only show code snippets and not the entire source.</p>
-        <details class="source-container">
-            <summary>View Source Code</summary>
-            <pre><code class="language-csharp" id="code-block-4"></code></pre>
-        </details>
-        <p>
-            The first number was decremented correctly, but the second number's
-            nonesensical output shows that this naive solution can't propogate decrementation
-            just like our initial incrementation logic, but how do we solve it?
-        </p>
-        <p>
-            It's clear that we need to somehow affect other positions, and the first obvious
-            step is to check for wrap arounds(when a number goes above 9 or below 0).
-        </p>
-        <details class="source-container">
-            <summary>View Source Code</summary>
-            <pre><code class="language-csharp" id="code-block-5"></code></pre>
-        </details>
-        <p>Finally! now we can see both '998' and '09', which are the correct solutions.</p>
-        <p>
-            Almost exactly like the solution for incrementing numbers, instead we wrap
-            the number up to 9 and don't expand the number if we happen to propogate the operation
-            to a new position, else we will have an infinite recursion condition where the number
-            paradoxically grows to infinity for some decrement cases.
-        </p>
-        <p>
-            Technically, our program is complete now, all possible arithmetic operations on a natural
-            number can be performed, summation is just group incrementation, subtraction is group
-            decrementation, multiplication is group addition and finally division is just group division with
-            extra logic if we want to also calculate remainders.
-        </p>
-        <details class="source-container">
-            <summary>View Source Code</summary>
-            <pre><code class="language-csharp" id="code-block-6"></code></pre>
-        </details>
-        <p>
-            As we can see, the solution is trivial, and it didn't take much effort to implement, which will
-            be true for the other arithmetic oeprations, but as you might have noticed if you read the
-            source, the run time is horrible, with non-constant time to perform addition, let alone the other
-            operations we have to implement, and also considering that each position represents an 'int', which
-            in C# is a 32 bit signed integer, means that we use only 4 bits out of 32, leaving 28 bits empty
-            and not utilizing it, we have to find a solution.
-        </p>
-        <p>
-            This is where the use if integer types over strings to represent our positions becomes
-            useful, as we can simply replace 'int's with 'byte', which is a type that is only 8 bits large, or
-            a single byte large, it would still mean that we waste 50% of our memory, but having the numbers closer
-            together in the memroy means that we can cram more of them into the cache, greatly improving memory
-            access speeds, hopefully making processes with a lot of numbers much faster, also allowing
-            us to use bitwise operations in the future to use 100% of the bits(technically less since BCD
-            has 16 possible values while decimal numbers only have 10 values for each position) to represent numbers.
-        </p>
-        <details class="source-container">
-            <summary>View Source Code</summary>
-            <pre><code class="language-csharp" id="code-block-7"></code></pre>
-        </details>
-        <p>
-            This had negligible effects on performance, proving once again, that
-            "Premature optimization is the root of all evil." as said by donald knuth.
-        </p>
-        <p>
-            to see real gains, we have to perform real addition on our numbers, and not just increment
-            one by the amout of the other in an odd loop, which more observant readers will realize
-            is buggy, since we rely on a not too clever hack to compare the value of two numbers, which itself
-            adds to the performance overhead.
-        </p>
-        <p>
-            Right now we have two clear goals:
-        <ul>
-            <li>
-                <p>
-                    Implement true summation between two number objects.
-                </p>
-            </li>
-            <li>
-                <p>
-                    Implement a comparator between two number objects.
-                </p>
-            </li>
-        </ul>
-        <br>
-        <h2>Part 3: Summation and Comparison</h2>
-        <p>
-            The first and easier step right now is to do comparison, it also will make it clearer why the
-            'NaiveSum()' function performed so poorly.
-        </p>
-        <p>
-            To do that we will simply overload the '&gt;' and '&lt;' operators in C#, as it will give us a cleaner and
-            easier to use interface to compare two of our numbers, which leads us to wonder how we could start comparing
-            two numbers, if we can't use the previous hack to return a value representing our objects.
-        </p>
-        <p>
-            Visualizing the operations will help us see patterns and edge cases we might have not seen through
-            purely writing the solution in code:
-        </p>
-        <div class="imagewrapper"><img src="compare 1.png" alt=""></div>
-        <p>
-            We will start from most significant position to the least, so we can benefit from early exists where
-            we don't have to compare every single value in the internal list of both numbers, like in the
-            example where we return the result by merely finding the first different pair of numbers, since by necessity
-            this means that the lower number must be larger than the upper one, althought this approach will cause us
-            trouble
-            since we will have to handle more edge cases, which also help us in discovering more early exists.
-        </p>
-        <p>
-            The firs practical problem we have to solve is preceding zeros, since there is a possibility of a number
-            having its most significant position all the way to the first position be all zeros given the appropriate
-            set of operations performed on that number, so we have to skip all these numbers before doing any
-            comparison,
-            which is best shown through the code itself.
-        </p>
-        <details class="source-container">
-            <summary>View Source Code</summary>
-            <pre><code class="language-csharp" id="code-block-8"></code></pre>
-        </details>
-        <p>
-            After that we can benefit from our approach and do a very easy length check for both number
-            to see which is shorter, and therefore has the smaller/larger value, otherwise we do the final
-            check where we implement the example shown in the figure above, comparing the positions until
-            we find the first difference and return either true or false depending on whether we used '&gt;'
-            or '&lt;'.
-        </p>
-        <details class="source-container">
-            <summary>View Source Code</summary>
-            <pre><code class="language-csharp" id="code-block-9"></code></pre>
-        </details>
-        <p>
-            Running the performance test again, we see a huge improvement:
-        </p>
-        <p>
-            '123 + 654' went from ~5ms to ~3.5ms, while not great its still impressive
-            how optimizing a simple check boosted performance that much.
-        </p>
-        <p>
-            '1,000,000 + 1,000,000' thought went from ~700ms to...23ms! the overhead of
-            the check for large numbers seems to be much much more important, and we got
-            > 20x performance gains from getting rid of the previous hack.
-        </p>
-        <p>
-            While the comparison is technically not constant-time, i assume that
-            the early exits are going to be frequent enough that on average, it will
-            be a constant time operation.
-        </p>
-        <p>
-            After all this hard work, we can finally get rid of all the performance
-            benefits since we are going to reimplement summation itself to be
-            a constant time operation with no comparisons, which will hopefully make adding numbers of
-            different sizes not have the vast run times we see still.
-        </p>
-        <p>
-            The approach that most immediately came to me is sum every position and propogate
-            the carry to the next one, just like addition but with less assumptions and more edge
-            cases, although it shouldn't be nearly as complicated as the comparisons were(hopefully).
-        </p>
-        <p>
-            It's worth it to note that what we are doing right now is very similar to an operation
-            that happens in old CPUs, with a component called the
-            '<a href="https://en.wikipedia.org/wiki/Adder_(electronics)#Full_adder">Full adder</a>'.
-        </p>
-        <div class="imagewrapper"><img src="summation 1.png" alt=""></div>
-        <p>
-            We re-adapted the increment logic to work for adding large numbers, this approach also isn't
-            constant time, but it's as close as i can get it without having to do SIMD and bit-packing, which
-            will have problems since BCDs(Binary Coded Decimals) have boundries that don't align with how
-            bits are packed in a SIMD vector.
-        </p>
-        <details class="source-container">
-            <summary>View Source Code</summary>
-            <pre><code class="language-csharp" id="code-block-10"></code></pre>
-        </details>
-        <p>
-            This solution is almost-constant time, making it not blow up with larger numbers, and also happens
-            to be much faster, although sadly it's not as fast as i had hoped it would be:
-        </p>
-        <p>
-            '9,999,999 + 9,999,999' was done in ~280ms using 'NaiveSum()', this is especially bad
-            since the function scales with the value of the number to be added instead of the number of
-            positions, shown in '1,000,000,000 + 999,999,999' that took ~26,900ms!
-        </p>
-        <p>
-            '9,999,999 + 9,999,999' was done in ~3.5ms, great but still not the micro-second level performance
-            we might have expected, '1,000,000,000 + 999,999,999' was also done in ~3.5ms, proving that
-            'almost-constant' is a valid peformance measure.
-        </p>
-        <br>
+    <p>We didn't take into account how the values would propogate between positions, meaning that now
+        we will have to detect and handle carries, like in a full adder by propogating it to the next position.
+    </p>
+    <p>For the sake of simplicity, we will use recursion to first increment the least significant position, and
+        then if we detect a carry, propogate the increment to the next position, until we either have no more
+        carries or the carry overflows and we can no longer propogate it due to our number's size.
+    </p>
+    <p>also, due to the way C# works, we will use a class to encapsulate logic to make it easier to work with.</p>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-2"></code></pre>
+    </details>
+    <br>
+    <div class="imagewrapper"><img src="increment 2.png" alt=""></div>
+    <p>Great! Now we have solved the issues related to carry propogation, but if we look at the source
+        code, the number: 999 increments to 000, which is expected since it overflowed, but isn't that the
+        problem we were trying to solve in the first place?
+    </p>
+    <p>
+        We have to figure out how to expand our numbers dynamically, instead of having to guess how many
+        positions we need in our object before using it, this can be easily done by running a function 'expand()'
+        if we detect an overflow increment, and then increment the new position, which will require a rewrite
+        of some functions, since now the most significant number will be the one with the higher index, making
+        expansion trivial, and we will also make 'ToString()' return a normal number string.
+    </p>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-3"></code></pre>
+    </details>
+    <p>
+        Now we can finally increment our objects until we have no more room in memory, but we still have
+        problems, using the class feels awkward, and we can't use it meaningfully since we can't decrement numbers
+        yet, nor can we perform large additions/substractions at once.
+    </p>
+    </p>
+    <h2>Part 2: decrementing</h2>
+    <p>
+        First we have to understand how to decrement, and what functionalities we need to add to make
+        decrementation possible, and the best first step is to solve the easiest case:
+        5 - 1 = 4
+        We will just subtract 1 from the least significant position, and we will end up with the correct
+        result.
+    </p>
+    <p>From now on we will only show code snippets and not the entire source.</p>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-4"></code></pre>
+    </details>
+    <p>
+        The first number was decremented correctly, but the second number's
+        nonesensical output shows that this naive solution can't propogate decrementation
+        just like our initial incrementation logic, but how do we solve it?
+    </p>
+    <p>
+        It's clear that we need to somehow affect other positions, and the first obvious
+        step is to check for wrap arounds(when a number goes above 9 or below 0).
+    </p>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-5"></code></pre>
+    </details>
+    <p>Finally! now we can see both '998' and '09', which are the correct solutions.</p>
+    <p>
+        Almost exactly like the solution for incrementing numbers, instead we wrap
+        the number up to 9 and don't expand the number if we happen to propogate the operation
+        to a new position, else we will have an infinite recursion condition where the number
+        paradoxically grows to infinity for some decrement cases.
+    </p>
+    <p>
+        Technically, our program is complete now, all possible arithmetic operations on a natural
+        number can be performed, summation is just group incrementation, subtraction is group
+        decrementation, multiplication is group addition and finally division is just group division with
+        extra logic if we want to also calculate remainders.
+    </p>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-6"></code></pre>
+    </details>
+    <p>
+        As we can see, the solution is trivial, and it didn't take much effort to implement, which will
+        be true for the other arithmetic oeprations, but as you might have noticed if you read the
+        source, the run time is horrible, with non-constant time to perform addition, let alone the other
+        operations we have to implement, and also considering that each position represents an 'int', which
+        in C# is a 32 bit signed integer, means that we use only 4 bits out of 32, leaving 28 bits empty
+        and not utilizing it, we have to find a solution.
+    </p>
+    <p>
+        This is where the use if integer types over strings to represent our positions becomes
+        useful, as we can simply replace 'int's with 'byte', which is a type that is only 8 bits large, or
+        a single byte large, it would still mean that we waste 50% of our memory, but having the numbers closer
+        together in the memroy means that we can cram more of them into the cache, greatly improving memory
+        access speeds, hopefully making processes with a lot of numbers much faster, also allowing
+        us to use bitwise operations in the future to use 100% of the bits(technically less since BCD
+        has 16 possible values while decimal numbers only have 10 values for each position) to represent numbers.
+    </p>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-7"></code></pre>
+    </details>
+    <p>
+        This had negligible effects on performance, proving once again, that
+        "Premature optimization is the root of all evil." as said by donald knuth.
+    </p>
+    <p>
+        to see real gains, we have to perform real addition on our numbers, and not just increment
+        one by the amout of the other in an odd loop, which more observant readers will realize
+        is buggy, since we rely on a not too clever hack to compare the value of two numbers, which itself
+        adds to the performance overhead.
+    </p>
+    <p>
+        Right now we have two clear goals:
+    <ul>
+        <li>
+            <p>
+                Implement true summation between two number objects.
+            </p>
+        </li>
+        <li>
+            <p>
+                Implement a comparator between two number objects.
+            </p>
+        </li>
+    </ul>
+    <br>
+    <h2>Part 3: Summation and Comparison</h2>
+    <p>
+        The first and easier step right now is to do comparison, it also will make it clearer why the
+        'NaiveSum()' function performed so poorly.
+    </p>
+    <p>
+        To do that we will simply overload the '&gt;' and '&lt;' operators in C#, as it will give us a cleaner and
+        easier to use interface to compare two of our numbers, which leads us to wonder how we could start comparing
+        two numbers, if we can't use the previous hack to return a value representing our objects.
+    </p>
+    <p>
+        Visualizing the operations will help us see patterns and edge cases we might have not seen through
+        purely writing the solution in code:
+    </p>
+    <div class="imagewrapper"><img src="compare 1.png" alt=""></div>
+    <p>
+        We will start from most significant position to the least, so we can benefit from early exists where
+        we don't have to compare every single value in the internal list of both numbers, like in the
+        example where we return the result by merely finding the first different pair of numbers, since by necessity
+        this means that the lower number must be larger than the upper one, althought this approach will cause us
+        trouble
+        since we will have to handle more edge cases, which also help us in discovering more early exists.
+    </p>
+    <p>
+        The firs practical problem we have to solve is preceding zeros, since there is a possibility of a number
+        having its most significant position all the way to the first position be all zeros given the appropriate
+        set of operations performed on that number, so we have to skip all these numbers before doing any
+        comparison,
+        which is best shown through the code itself.
+    </p>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-8"></code></pre>
+    </details>
+    <p>
+        After that we can benefit from our approach and do a very easy length check for both number
+        to see which is shorter, and therefore has the smaller/larger value, otherwise we do the final
+        check where we implement the example shown in the figure above, comparing the positions until
+        we find the first difference and return either true or false depending on whether we used '&gt;'
+        or '&lt;'.
+    </p>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-9"></code></pre>
+    </details>
+    <p>
+        Running the performance test again, we see a huge improvement:
+    </p>
+    <p>
+        '123 + 654' went from ~5ms to ~3.5ms, while not great its still impressive
+        how optimizing a simple check boosted performance that much.
+    </p>
+    <p>
+        '1,000,000 + 1,000,000' thought went from ~700ms to...23ms! the overhead of
+        the check for large numbers seems to be much much more important, and we got
+        > 20x performance gains from getting rid of the previous hack.
+    </p>
+    <p>
+        While the comparison is technically not constant-time, i assume that
+        the early exits are going to be frequent enough that on average, it will
+        be a constant time operation.
+    </p>
+    <p>
+        After all this hard work, we can finally get rid of all the performance
+        benefits since we are going to reimplement summation itself to be
+        a constant time operation with no comparisons, which will hopefully make adding numbers of
+        different sizes not have the vast run times we see still.
+    </p>
+    <p>
+        The approach that most immediately came to me is sum every position and propogate
+        the carry to the next one, just like addition but with less assumptions and more edge
+        cases, although it shouldn't be nearly as complicated as the comparisons were(hopefully).
+    </p>
+    <p>
+        It's worth it to note that what we are doing right now is very similar to an operation
+        that happens in old CPUs, with a component called the
+        '<a href="https://en.wikipedia.org/wiki/Adder_(electronics)#Full_adder">Full adder</a>'.
+    </p>
+    <div class="imagewrapper"><img src="summation 1.png" alt=""></div>
+    <p>
+        We re-adapted the increment logic to work for adding large numbers, this approach also isn't
+        constant time, but it's as close as i can get it without having to do SIMD and bit-packing, which
+        will have problems since BCDs(Binary Coded Decimals) have boundries that don't align with how
+        bits are packed in a SIMD vector.
+    </p>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-10"></code></pre>
+    </details>
+    <p>
+        This solution is almost-constant time, making it not blow up with larger numbers, and also happens
+        to be much faster, although sadly it's not as fast as i had hoped it would be:
+    </p>
+    <p>
+        '9,999,999 + 9,999,999' was done in ~280ms using 'NaiveSum()', this is especially bad
+        since the function scales with the value of the number to be added instead of the number of
+        positions, shown in '1,000,000,000 + 999,999,999' that took ~26,900ms!
+    </p>
+    <p>
+        '9,999,999 + 9,999,999' was done in ~3.5ms, great but still not the micro-second level performance
+        we might have expected, '1,000,000,000 + 999,999,999' was also done in ~3.5ms, proving that
+        'almost-constant' is a valid peformance measure.
+    </p>
+    <p>
+        P.S: it could be a problem with the way we time functions, since even adding two
+        'ulong.MaxValue' takes the same time, while it takes too long for me to bother on the naive
+        implementation.
+    </p>
+    <br>
+    <h2>Part 3.2: leftovers</h2>
+    <p>
+        There are still some operations we haven't implemented yet, and they are much simpler to implement and use
+        functionalities we implemented
+        earlier, they are:
+    <ul>
+        <li>
+            <p>Substractions</p>
+        </li>
+        <li>
+            <p>Equality(both '==' and '!=')</p>
+        </li>
+    </ul>
+    <h3>Substraction:</h3>
+    <p>
+        Exactly like summation, except instead of substracting 10 after detecting carries, we add 10 and propogate a
+        -1 and not a +1.
+    </p>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-11"></code></pre>
+    </details>
+    <h3>Equality:</h3>
+    <p>
+        Similar to comparison, except we expect a perfect match to determine result.
+    </p>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-12"></code></pre>
+    </details>
+    <br>
+    <!-- <h2>Part 4: Optimization</h2>
+    <p>
+        We learned from our previous mistake and waited until we had all the functionalities implemented before we
+        tried to optimize them.
+    </p>
+    <p>
+        We can't just optimize based on instinct and expect it to improve results, first we have to measure
+        our functions correctly, and how we are going to do that is through counting how many operations
+        we can perform per second, when compute times get smaller its harder and harder to get an accurate
+        number by simply counting how much time the function takes using 'StopWatch', the measure is going to
+        be called op/s.
+    </p>
+    <p>
+        We will measure 5,000,000 operations:
+    </p>
+    <p>
+        Our implementation:
+    </p>
+    <ul>
+        <li>
+            <p>
+                Summation: 2.660 seconds, 1,879,699 op/s.
+            </p>
+        </li>
+        <li>
+            <p>
+                Subtraction: 2.284 seconds, 2,189,141 op/s.
+            </p>
+        </li>
+        <li>
+            <p>
+                Larger than: 1.928 seconds, 2,593,360 op/s.
+            </p>
+        </li>
+        <li>
+            <p>
+                Less than: 1.935 seconds, 2,583,979 op/s.
+            </p>
+        </li>
+        <li>
+            <p>
+                Equal: 1.951 seconds, 2,562,788 op/s.
+            </p>
+        </li>
+        <li>
+            <p>
+                Not Equal: 1.921 seconds, 2,602,811 op/s.
+            </p>
+        </li>
+    </ul>
+    <p>
+        Proper profiling showed that the previous 3.5ms figure was a profiling error, and
+        not the actual performance of our functions.
+    </p>
+    <p>
+        We can see that summation is the slowest operation, which makes sense since it has the most
+        steps and no early exits like in subtraction, where if the difference is negative, we return 0.
+    </p>
+    <p>
+        There aren't many oppurtunities to optimize the function further, it doesn't allocate any temporary
+        memory on the heap, it uses primitives for flags and uses simple operations to compute the final result.
+    </p> -->
+    <p>
+        This was an attempt at solving a deceptively hard problem, which involves designing and optimizing
+        an arbitrary size integer type to reach nano-second level performance, which requires techniques
+        beyond my expertise, like bit-packing, SIMD, branchless conditions and much more.
+    </p>
+    <p>
+        The complete program is available below, the code quality is questionable but hopefully it's clear.
+    </p>
+    <details class="source-container">
+        <summary>View Source Code</summary>
+        <pre><code class="language-csharp" id="code-block-13"></code></pre>
+    </details>
 </body>
 
 <script>
-    let code_block_count = 10;
+    let code_block_count = 13;
     for (let index = 1; index <= code_block_count; index++) {
         fetch("source_" + index + ".cs")
             .then(res => res.text())

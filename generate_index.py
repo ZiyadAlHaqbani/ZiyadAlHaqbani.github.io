@@ -6,11 +6,7 @@ blog_pages = ""
 
 for dir in dirs:
     blog_pages += f'''\n
-<main>
-    <article>
         <h2><a href="pages/{dir}/index.html">{dir}</a></h2>
-    </article>
-</main>
     '''
 
 

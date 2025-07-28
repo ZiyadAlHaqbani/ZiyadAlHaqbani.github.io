@@ -137,19 +137,7 @@
         </div>
         <div class="middle-section">
             <div class="list-of-content background">
-                
-
-        <div class="loc-item gradient-background" data-article-src="pages/Test_Page/index.html"
-                    onclick="changeArticle(event)">
-            <h2>Test_Page</h2>
-        </div>
-    
-
-        <div class="loc-item gradient-background" data-article-src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html"
-                    onclick="changeArticle(event)">
-            <h2>Writing_an_arbitrary_size_integer_type_in_CS</h2>
-        </div>
-    
+                _blog_pages_
             </div>
             <iframe id="article" class="article-body background"
                 src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html" frameborder="0">

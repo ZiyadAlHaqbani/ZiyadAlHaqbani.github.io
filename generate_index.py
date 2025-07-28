@@ -6,41 +6,19 @@ blog_pages = ""
 
 for dir in dirs:
     blog_pages += f'''\n
-<main>
-    <article>
-        <h2><a href="pages/{dir}/index.html">{dir}</a></h2>
-    </article>
-</main>
+        <div class="loc-item gradient-background" data-article-src="pages/{dir}/index.html"
+                    onclick="changeArticle(event)">
+            <h2>{dir}</h2>
+        </div>
     '''
 
 
-index =f'''
-<!DOCTYPE html>
-<html lang="en">
+index = ''
 
-<head>
-    <meta charset="UTF-8">
-    <title>Ziyad AlHaqbani's blog</title>
-    <link rel="stylesheet" href="index.css">
-</head>
-
-<body>
-    <header>
-        <h1>Ziyad AlHaqbani's blog</h1>
-        <h2>
-            Description:
-        </h2>
-        
-        <h3>
-            This blog will contain random topics about programming that
-            i happen to be interested in at the moment.
-        </h3>
-    </header>
-</body>
-{blog_pages}
-
-</html>
-'''
+with open('template_index.template', 'r') as file:
+    index = file.read()
+    
+index = index.replace('_blog_pages_', blog_pages)
 
 with open('index.html', 'w', encoding='utf-8') as f:
     f.write(index)

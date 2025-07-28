@@ -1,89 +1,181 @@
 <html>
 
 <head>
-    <title>Ziyad Alhaqbani's Blog</title>
     <style>
-        .container {
+        .main-column {
             display: flex;
-            width: 100%;
+            flex-direction: column;
             height: 100%;
+            width: 100%;
         }
 
-        .container * {
+        .main-column>* {
+            margin: 0.25em;
+        }
+
+        .header {
             display: flex;
+            flex-direction: row;
+            text-align: center;
+            /* font-size: large; */
+            height: 10%;
+            border-radius: 1rem;
+            justify-content: space-around;
+        }
+
+        .header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 2rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 8px black;
+            margin: 0.125em;
+        }
+
+        .header img:hover {
+            box-shadow: 0px 0px 32px black;
+            cursor: pointer;
+        }
+
+        .footer {
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            font-size: large;
+            height: 10%;
+            border-radius: 1rem;
+            justify-content: space-around;
+        }
+
+        .middle-section {
+            display: flex;
+            flex-direction: row;
+            flex-grow: 1;
             border-radius: 1rem;
         }
 
-        .column {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .middle-section>* {
+            border-radius: 1rem;
+            margin: 0.25em;
         }
 
-        .row {
+        .list-of-content {
+            width: 20%;
+            height: 80vh;
             display: flex;
-            flex-direction: row;
-            justify-content: space-around;
+            flex-direction: column;
+            overflow: auto;
+            scrollbar-width: none;
+        }
+
+        .list-of-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .loc-item {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            height: 20%;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 2.5rem;
+            box-shadow: 4px 4px 8px black;
+            margin: 1em;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+            transition: background-color 0.3s ease;
+        }
+
+        .loc-item:hover {
+            box-shadow: 0px 0px 64px black;
+            cursor: pointer;
+            background: linear-gradient(171deg, rgba(59, 98, 217, 0.25) 0%, rgba(83, 93, 212, 0.25) 34%, rgba(136, 73, 230, 0.25) 72%);
+        }
+
+        .loc-item>* {
+            text-align: center;
+            text-wrap: 1;
+        }
+
+        .article-body {
+            display: flex;
+            flex-grow: 1;
+            scrollbar-width: none;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .article-body.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .article-body::-webkit-scrollbar {
+            display: none;
         }
 
         .background {
             background-color: rgba(0, 0, 0, 0.1);
         }
 
-        .spacer {
-            display: flex;
-            flex-grow: 1;
-        }
-
-        .header,
-        .footer {
-            display: flex;
-            height: 10%;
-        }
-
-        /* list of contents */
-        .LOC {
-            display: flex;
-            width: 20%;
-            overflow-y: auto;
-        }
-
-        .expander {
-            display: flex;
-            flex-grow: 1;
-        }
-
-        .margin {
-            margin: 1em;
-        }
-
-        .main-body {
-            flex-grow: 1;
-            margin: 1em;
-            overflow-y: auto;
+        .gradient-background {
+            background: #3b62d9;
+            background: linear-gradient(171deg, rgba(59, 98, 217, 0.25) 0%, rgba(83, 93, 212, 0.25) 34%, rgba(136, 73, 230, 0.25) 72%);
         }
     </style>
 </head>
 
-<div class="column container">
-    <div class="header background">
-        <h1>Ziyad Alhaqbani's Blog</h1>
-    </div>
-    <div class="row expander margin">
-        <div class="LOC background column">
-            <h1>A</h1>
-            <h1>A</h1>
-            <h1>A</h1>
-            <h1>A</h1>
-            <h1>A</h1>
+<body>
+    <div class="main-column gradient-background">
+        <div class="header gradient-background">
+            <a href="https://github.com/ZiyadAlhaqbani" target="_blank" rel="noopener noreferrer">
+                <img src="github-svgrepo-com.svg" alt="AUTHOR: Donnnno">
+            </a>
+            <a href="https://linkedin.com/in/ziyad-alhaqbani-a81194326" target="_blank" rel="noopener noreferrer">
+                <img src="linkedin-svgrepo-com.svg" alt="AUTHOR: Konstantin Filatov">
+            </a>
         </div>
-        <div class="main-body background">
-
+        <div class="middle-section">
+            <div class="list-of-content background">
+                <div class="loc-item gradient-background"
+                    data-article-src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html"
+                    onclick="changeArticle(event)">
+                    <h2>Writing an arbitrary size integer type in C#</h2>
+                </div>
+                <div class="loc-item gradient-background" data-article-src="pages/Test_Page/index.html"
+                    onclick="changeArticle(event)">
+                    <h2>Test Page</h2>
+                </div>
+            </div>
+            <iframe id="article" class="article-body background"
+                src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html" frameborder="0">
+            </iframe>
+        </div>
+        <div class="footer background">
+            <h1>Ziyad Alhaqbani's Blog</h1>
         </div>
     </div>
-    <div class="footer background">
-    </div>
-</div>
+</body>
 
+<script>
+    function changeArticle(event) {
+        const newSrc = event.currentTarget.dataset.articleSrc;
+        const article = document.getElementById("article");
+
+        // Start fade out
+        article.classList.add("fade-out");
+
+        // When iframe finishes fading out, change src
+        setTimeout(() => {
+            article.src = newSrc;
+        }, 300); // slightly less than CSS transition duration for smoothness
+    }
+
+    // Fade-in after iframe has loaded
+    document.getElementById("article").addEventListener("load", () => {
+        const article = document.getElementById("article");
+        article.classList.remove("fade-out");
+    });
+</script>
 
 </html>

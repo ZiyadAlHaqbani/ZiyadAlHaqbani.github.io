@@ -17,10 +17,12 @@
             display: flex;
             flex-direction: row;
             text-align: center;
-            /* font-size: large; */
-            height: 10%;
-            border-radius: 1rem;
-            justify-content: space-around;
+            padding-inline-end: 2em;
+            padding-inline-start: 20%;
+            background: url(images/header_bg.png) bottom repeat-x;
+            transform: translateX(-10%);
+            width: 120%;
+            padding-bottom: 22px;
         }
 
         .header img {
@@ -33,7 +35,7 @@
         }
 
         .header img:hover {
-            box-shadow: 0px 0px 32px black;
+            box-shadow: 0px 0px 12px black;
             cursor: pointer;
         }
 
@@ -42,7 +44,7 @@
             flex-direction: row;
             text-align: center;
             font-size: large;
-            height: 10%;
+            /* height: 10%; */
             border-radius: 1rem;
             justify-content: space-around;
         }
@@ -60,7 +62,7 @@
         }
 
         .list-of-content {
-            width: 20%;
+            width: 15%;
             height: 80vh;
             display: flex;
             flex-direction: column;
@@ -72,29 +74,23 @@
             display: none;
         }
 
-        .loc-item {
+        /* .loc-item {
             text-decoration: none;
             color: inherit;
             display: block;
-            height: 20%;
+            height: 15%;
             background-color: rgba(0, 0, 0, 0.2);
             border-radius: 2.5rem;
-            box-shadow: 4px 4px 8px black;
+            box-shadow: 1px 1px 6px black;
             margin: 1em;
             overflow: hidden;
-            transition: box-shadow 0.3s ease;
-            transition: background-color 0.3s ease;
-        }
-
-        .loc-item:hover {
-            box-shadow: 0px 0px 64px black;
-            cursor: pointer;
-            background: linear-gradient(171deg, rgba(59, 98, 217, 0.25) 0%, rgba(83, 93, 212, 0.25) 34%, rgba(136, 73, 230, 0.25) 72%);
-        }
+            transition: 0.1s ease;
+        } */
 
         .loc-item>* {
             text-align: center;
             text-wrap: 1;
+            font-size: larger;
         }
 
         .article-body {
@@ -103,6 +99,7 @@
             scrollbar-width: none;
             opacity: 1;
             transition: opacity 0.5s ease;
+            margin: 0.5em;
         }
 
         .article-body.fade-out {
@@ -115,19 +112,150 @@
         }
 
         .background {
-            background-color: rgba(0, 0, 0, 0.1);
+            background: radial-gradient(circle at center, rgba(1, 1, 1, 0.1), rgba(0, 0, 0, 0.0));
         }
 
-        .gradient-background {
-            background: #3b62d9;
-            background: linear-gradient(171deg, rgba(59, 98, 217, 0.25) 0%, rgba(83, 93, 212, 0.25) 34%, rgba(136, 73, 230, 0.25) 72%);
+        body {
+            background:
+            radial-gradient(
+            circle at 25% 20%,
+            rgba(255,255,255,0.5),
+            rgba(0,0,0, 0.5)
+            ),
+            url(images/texture.png);
+        }
+
+        .loc-item {
+            all: unset;
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            position: relative;
+            border-radius: 999vw;
+            background-color: rgba(0, 0, 0, 0.75);
+            box-shadow: -0.15em -0.15em 0.15em -0.075em rgba(5, 5, 5, 0.25),
+                0.0375em 0.0375em 0.0675em 0 rgba(5, 5, 5, 0.1);
+            margin: 1em;
+        }
+
+        .loc-item::after {
+            content: "";
+            position: absolute;
+            z-index: 0;
+            width: calc(100% + 0.3em);
+            height: calc(100% + 0.3em);
+            top: -0.15em;
+            left: -0.15em;
+            border-radius: inherit;
+            background: linear-gradient(-135deg,
+                    rgba(5, 5, 5, 0.5),
+                    transparent 20%,
+                    transparent 100%);
+            filter: blur(0.0125em);
+            opacity: 0.25;
+            mix-blend-mode: multiply;
+        }
+
+        .loc-item .button-outer {
+            position: relative;
+            z-index: 1;
+            border-radius: inherit;
+            transition: box-shadow 300ms ease;
+            will-change: box-shadow;
+            box-shadow: 0 0.05em 0.05em -0.01em rgba(5, 5, 5, 1),
+                0 0.01em 0.01em -0.01em rgba(5, 5, 5, 0.5),
+                0.15em 0.3em 0.1em -0.01em rgba(5, 5, 5, 0.25);
+        }
+
+        .loc-item:hover .button-outer {
+            box-shadow: 0 0 0 0 rgba(5, 5, 5, 1), 0 0 0 0 rgba(5, 5, 5, 0.5),
+                0 0 0 0 rgba(5, 5, 5, 0.25);
+        }
+
+        .button-inner {
+            --inset: 0.035em;
+            position: relative;
+            z-index: 1;
+            border-radius: inherit;
+            padding: 1em 1.5em;
+            background-image: linear-gradient(135deg,
+                    rgba(230, 230, 230, 1),
+                    rgba(180, 180, 180, 1));
+            transition: box-shadow 300ms ease, clip-path 250ms ease,
+                background-image 250ms ease, transform 250ms ease;
+            will-change: box-shadow, clip-path, background-image, transform;
+            overflow: clip;
+            clip-path: inset(0 0 0 0 round 999vw);
+            box-shadow:
+                /* 1 */
+                0 0 0 0 inset rgba(5, 5, 5, 0.1),
+                /* 2 */
+                -0.05em -0.05em 0.05em 0 inset rgba(5, 5, 5, 0.25),
+                /* 3 */
+                0 0 0 0 inset rgba(5, 5, 5, 0.1),
+                /* 4 */
+                0 0 0.05em 0.2em inset rgba(255, 255, 255, 0.25),
+                /* 5 */
+                0.025em 0.05em 0.1em 0 inset rgba(255, 255, 255, 1),
+                /* 6 */
+                0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
+                /* 7 */
+                -0.075em -0.25em 0.25em 0.1em inset rgba(5, 5, 5, 0.25);
+        }
+
+        .loc-item:hover .button-inner {
+            clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 999vw);
+            box-shadow:
+                /* 1 */
+                0.1em 0.15em 0.05em 0 inset rgba(5, 5, 5, 0.75),
+                /* 2 */
+                -0.025em -0.03em 0.05em 0.025em inset rgba(5, 5, 5, 0.5),
+                /* 3 */
+                0.25em 0.25em 0.2em 0 inset rgba(5, 5, 5, 0.5),
+                /* 4 */
+                0 0 0.05em 0.5em inset rgba(255, 255, 255, 0.15),
+                /* 5 */
+                0 0 0 0 inset rgba(255, 255, 255, 1),
+                /* 6 */
+                0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
+                /* 7 */
+                -0.075em -0.12em 0.2em 0.1em inset rgba(5, 5, 5, 0.25);
+        }
+
+        .loc-item .button-inner span {
+            position: relative;
+            z-index: 4;
+            font-family: "Inter", sans-serif;
+            letter-spacing: -0.05em;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0);
+            background-image: linear-gradient(135deg,
+                    rgba(25, 25, 25, 1),
+                    rgba(75, 75, 75, 1));
+            -webkit-background-clip: text;
+            background-clip: text;
+            transition: transform 250ms ease;
+            display: block;
+            will-change: transform;
+            text-shadow: rgba(0, 0, 0, 0.1) 0 0 0.1em;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .loc-item:hover .button-inner span {
+            transform: scale(0.975);
+        }
+
+        .loc-item:active .button-inner {
+            transform: scale(0.975);
         }
     </style>
 </head>
 
-<body>
-    <div class="main-column gradient-background">
-        <div class="header gradient-background">
+<body class="gradient-background">
+    <div class="main-column">
+        <div class="header">
             <a href="https://github.com/ZiyadAlhaqbani" target="_blank" rel="noopener noreferrer">
                 <img src="github-svgrepo-com.svg" alt="AUTHOR: Donnnno">
             </a>
@@ -136,29 +264,49 @@
             </a>
         </div>
         <div class="middle-section">
-            <div class="list-of-content background">
+            <div class="list-of-content">
                 
 
-        <div class="loc-item gradient-background" data-article-src="pages/Test_Page/index.html"
+        <div id="button_0" class="loc-item"
+                    data-article-src="pages/Test_Page/index.html"
                     onclick="changeArticle(event)">
-            <h2>Test_Page</h2>
-        </div>
+                    <div class="button-outer">
+                        <div class="button-inner">
+                            <span>Test Page</span>
+                        </div>
+                    </div>
+                </div>
     
 
-        <div class="loc-item gradient-background" data-article-src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html"
+        <div id="button_1" class="loc-item"
+                    data-article-src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html"
                     onclick="changeArticle(event)">
-            <h2>Writing_an_arbitrary_size_integer_type_in_CS</h2>
-        </div>
+                    <div class="button-outer">
+                        <div class="button-inner">
+                            <span>Writing an arbitrary size integer type in CS</span>
+                        </div>
+                    </div>
+                </div>
     
+
+        <div id="button_2" class="loc-item"
+                    data-article-src="pages/Writing_a_faster_ JSON_compatible_object_serialization_format_in_golang/index.html"
+                    onclick="changeArticle(event)">
+                    <div class="button-outer">
+                        <div class="button-inner">
+                            <span>Writing a faster  JSON compatible object serialization format in golang</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <h3>Last generated: October 07, 2025 at 19:34 UTC</h3>
             </div>
-            <iframe id="article" class="article-body background"
+            <iframe id="article" class="article-body"
                 src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html" frameborder="0">
             </iframe>
         </div>
-        <div class="footer background">
-            <h1>Ziyad Alhaqbani's Blog</h1>
-        </div>
     </div>
+    <audio id="sound-player" src="click.mp3"></audio>
 </body>
 
 <script>
@@ -166,13 +314,18 @@
         const newSrc = event.currentTarget.dataset.articleSrc;
         const article = document.getElementById("article");
 
+        // play sound
+        let soundPlayer = document.getElementById("sound-player");
+        soundPlayer.currentTime = 0; // reset sound
+        soundPlayer.play();
+
         // Start fade out
         article.classList.add("fade-out");
 
         // When iframe finishes fading out, change src
         setTimeout(() => {
             article.src = newSrc;
-        }, 300); // slightly less than CSS transition duration for smoothness
+        }, 150); // slightly less than CSS transition duration for smoothness
     }
 
     // Fade-in after iframe has loaded

@@ -1,3 +1,5 @@
+# THIS POST IN IN PROGRESS
+
 # Writing a faster JSON compatible object serialization format in golang
 
 ## intro

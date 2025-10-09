@@ -6,6 +6,8 @@ dirs = os.listdir("pages")
 blog_pages = ""
 
 counter = 0
+
+dirs.sort(reverse=True)
 for dir in dirs:
     page_name = dir.replace('_', ' ')
     blog_pages += f'''\n

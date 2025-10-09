@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <title>Ziyad Alhaqbani's tech blog</title>
     <style>
         .main-column {
             display: flex;
@@ -13,41 +14,50 @@
             margin: 0.25em;
         }
 
+        .header-wrapper {
+            position: relative;
+        }
+
+        .header-wrapper::after {
+
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 8px;
+            height: 16px;
+        }
+
         .header {
             display: flex;
             flex-direction: row;
+            background:
+                url(images/header_bg.png) bottom repeat-x;
             text-align: center;
             padding-inline-end: 2em;
             padding-inline-start: 20%;
-            background: url(images/header_bg.png) bottom repeat-x;
-            transform: translateX(-10%);
-            width: 120%;
             padding-bottom: 22px;
+            z-index: inherit;
         }
 
         .header img {
             width: 50px;
             height: 50px;
-            border-radius: 2rem;
+            border-radius: 1rem;
             background-color: rgba(0, 0, 0, 0.1);
-            box-shadow: 0px 0px 8px black;
-            margin: 0.125em;
+            box-shadow: 0px 0px 2px black;
+            margin-inline: 0.5em;
+
+            margin-bottom: 0.125em;
+            margin-top: 0.125em;
+            z-index: inherit;
         }
 
         .header img:hover {
-            box-shadow: 0px 0px 12px black;
+            box-shadow: 0px 0px 4px black;
             cursor: pointer;
         }
 
-        .footer {
-            display: flex;
-            flex-direction: row;
-            text-align: center;
-            font-size: large;
-            /* height: 10%; */
-            border-radius: 1rem;
-            justify-content: space-around;
-        }
 
         .middle-section {
             display: flex;
@@ -74,18 +84,12 @@
             display: none;
         }
 
-        /* .loc-item {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            height: 15%;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 2.5rem;
-            box-shadow: 1px 1px 6px black;
-            margin: 1em;
-            overflow: hidden;
-            transition: 0.1s ease;
-        } */
+        .loc-item.disabled{
+            pointer-events: none;
+            opacity: 0.75;
+            cursor: default;
+
+        }
 
         .loc-item>* {
             text-align: center;
@@ -93,17 +97,40 @@
             font-size: larger;
         }
 
+        .article-body-wrapper {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+            margin-inline: 2rem;
+            background:
+                url(images/bg.png);
+            box-shadow: inset 0px 0px 16px black;
+        }
+
         .article-body {
             display: flex;
             flex-grow: 1;
             scrollbar-width: none;
             opacity: 1;
-            transition: opacity 0.5s ease;
-            margin: 0.5em;
+            transition:
+            transform 0.5s ease;
+
+            height: 110%;
+            border-bottom-left-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+            margin-inline: 4em;
+            box-shadow: inset 0px 0px 16px black;
+            background:
+                url(images/texture.png),
+                white;
         }
 
-        .article-body.fade-out {
-            opacity: 0;
+        .article-body>* {
+            margin-inline: 1em;
+        }
+
+        .article-body.scroll-to-new-page {
+            transform: translateY(-120%);
             pointer-events: none;
         }
 
@@ -117,12 +144,13 @@
 
         body {
             background:
-            radial-gradient(
-            circle at 25% 20%,
-            rgba(255,255,255,0.5),
-            rgba(0,0,0, 0.5)
-            ),
-            url(images/texture.png);
+                radial-gradient(circle at 25% 20%,
+                    rgba(255, 255, 255, 0.5),
+                    rgba(0, 0, 0, 0.5)),
+                url(images/texture.png);
+            background-blend-mode: multiply;
+            width: 100%;
+            overflow: hidden;
         }
 
         .loc-item {
@@ -130,7 +158,7 @@
             cursor: pointer;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
             position: relative;
-            border-radius: 999vw;
+            border-radius: 1rem;
             background-color: rgba(0, 0, 0, 0.75);
             box-shadow: -0.15em -0.15em 0.15em -0.075em rgba(5, 5, 5, 0.25),
                 0.0375em 0.0375em 0.0675em 0 rgba(5, 5, 5, 0.1);
@@ -184,7 +212,7 @@
                 background-image 250ms ease, transform 250ms ease;
             will-change: box-shadow, clip-path, background-image, transform;
             overflow: clip;
-            clip-path: inset(0 0 0 0 round 999vw);
+            clip-path: inset(0 0 0 0 round 1rem);
             box-shadow:
                 /* 1 */
                 0 0 0 0 inset rgba(5, 5, 5, 0.1),
@@ -203,7 +231,7 @@
         }
 
         .loc-item:hover .button-inner {
-            clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 999vw);
+            clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 1rem);
             box-shadow:
                 /* 1 */
                 0.1em 0.15em 0.05em 0 inset rgba(5, 5, 5, 0.75),
@@ -268,9 +296,11 @@
                 _blog_pages_
                 _time_stamp_
             </div>
-            <iframe id="article" class="article-body"
-                src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html" frameborder="0">
-            </iframe>
+            <div class="article-body-wrapper">
+                <iframe id="article" class="article-body"
+                    src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html" frameborder="0">
+                </iframe>
+            </div>
         </div>
     </div>
     <audio id="sound-player" src="click.mp3"></audio>
@@ -281,24 +311,30 @@
         const newSrc = event.currentTarget.dataset.articleSrc;
         const article = document.getElementById("article");
 
+        // lock all buttons
+        const buttons = document.querySelectorAll(".loc-item")
+        buttons.forEach(btn => {btn.classList.add("disabled")})
+
         // play sound
         let soundPlayer = document.getElementById("sound-player");
+        soundPlayer.pause()
         soundPlayer.currentTime = 0; // reset sound
         soundPlayer.play();
 
         // Start fade out
-        article.classList.add("fade-out");
+        article.classList.add("scroll-to-new-page");
 
         // When iframe finishes fading out, change src
         setTimeout(() => {
             article.src = newSrc;
-        }, 150); // slightly less than CSS transition duration for smoothness
+            buttons.forEach(btn => {btn.classList.remove("disabled")})
+        }, 400); // slightly more than CSS transition duration for smoothness
     }
 
     // Fade-in after iframe has loaded
     document.getElementById("article").addEventListener("load", () => {
         const article = document.getElementById("article");
-        article.classList.remove("fade-out");
+        article.classList.remove("scroll-to-new-page");
     });
 </script>
 

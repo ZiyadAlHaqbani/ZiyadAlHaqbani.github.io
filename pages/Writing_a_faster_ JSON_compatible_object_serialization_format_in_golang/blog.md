@@ -1,4 +1,4 @@
-# THIS POST IN IN PROGRESS
+# THIS POST IS IN PROGRESS
 
 # Writing a faster JSON compatible object serialization format in golang
 

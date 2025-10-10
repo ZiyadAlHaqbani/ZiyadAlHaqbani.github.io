@@ -10,60 +10,62 @@
             width: 100%;
         }
 
-        .main-column>* {
-            margin: 0.25em;
-        }
-
-        .header-wrapper {
-            position: relative;
-        }
-
-        .header-wrapper::after {
-
-            content: "";
+        div.header {
             position: absolute;
+            top: 0;
             left: 0;
-            right: 0;
-            bottom: 8px;
-            height: 16px;
-        }
+            height: 50%;
+            width: 99%;
+            padding: 1rem;
 
-        .header {
-            display: flex;
-            flex-direction: row;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 10%);
+            grid-auto-rows: minmax(90px, auto);
+            gap: 0.75rem;
+
+            justify-items: center;
+            align-items: center;
+
             background:
-                url(images/header_bg.png) bottom repeat-x;
-            text-align: center;
-            padding-inline-end: 2em;
-            padding-inline-start: 20%;
-            padding-bottom: 22px;
-            z-index: inherit;
-        }
+                url(images/texture.png) repeat,
+                white;
+            border-bottom-right-radius: 1rem;
+            border-bottom-left-radius: 1rem;
+            transform: translateY(-85%);
+            z-index: 10;
 
-        .header img {
-            width: 50px;
-            height: 50px;
-            border-radius: 1rem;
-            background-color: rgba(0, 0, 0, 0.1);
             box-shadow: 0px 0px 2px black;
-            margin-inline: 0.5em;
-
-            margin-bottom: 0.125em;
-            margin-top: 0.125em;
-            z-index: inherit;
+            transition: 0.2s ease;
         }
 
-        .header img:hover {
-            box-shadow: 0px 0px 4px black;
+        div.header:hover {
+            transform: translateY(-82.5%);
             cursor: pointer;
         }
 
+        div.header-spacer {
+            display: flex;
+            height: 10%;
+        }
+
+        div.header-down {
+            /* overwrites the hover style */
+            transform: translateY(0%) !important;
+            cursor: default !important;
+        }
+
+        .header .loc-item {
+            max-width: 200px;
+            height: 200px;
+        }
 
         .middle-section {
             display: flex;
             flex-direction: row;
             flex-grow: 1;
             border-radius: 1rem;
+
+            padding-bottom: 0.5em;
         }
 
         .middle-section>* {
@@ -72,19 +74,21 @@
         }
 
         .list-of-content {
-            width: 15%;
-            height: 80vh;
+            width: 20%;
+            height: 30%;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             overflow: auto;
             scrollbar-width: none;
+
+            box-shadow: 0px 0px 4px black;
         }
 
         .list-of-content::-webkit-scrollbar {
             display: none;
         }
 
-        .loc-item.disabled{
+        .loc-item.disabled {
             pointer-events: none;
             opacity: 0.75;
             cursor: default;
@@ -113,9 +117,9 @@
             scrollbar-width: none;
             opacity: 1;
             transition:
-            transform 0.5s ease;
+                transform 0.5s ease;
 
-            height: 110%;
+            height: 105%;
             border-bottom-left-radius: 2rem;
             border-bottom-right-radius: 2rem;
             margin-inline: 4em;
@@ -130,7 +134,7 @@
         }
 
         .article-body.scroll-to-new-page {
-            transform: translateY(-120%);
+            transform: translateY(-110%);
             pointer-events: none;
         }
 
@@ -142,7 +146,13 @@
             background: radial-gradient(circle at center, rgba(1, 1, 1, 0.1), rgba(0, 0, 0, 0.0));
         }
 
+        html,
         body {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
             background:
                 radial-gradient(circle at 25% 20%,
                     rgba(255, 255, 255, 0.5),
@@ -150,6 +160,7 @@
                 url(images/texture.png);
             background-blend-mode: multiply;
             width: 100%;
+            height: 100%;
             overflow: hidden;
         }
 
@@ -281,65 +292,54 @@
     </style>
 </head>
 
-<body class="gradient-background">
+<body>
     <div class="main-column">
-        <div class="header">
-            <a href="https://github.com/ZiyadAlhaqbani" target="_blank" rel="noopener noreferrer">
-                <img src="github-svgrepo-com.svg" alt="AUTHOR: Donnnno">
-            </a>
-            <a href="https://linkedin.com/in/ziyad-alhaqbani-a81194326" target="_blank" rel="noopener noreferrer">
-                <img src="linkedin-svgrepo-com.svg" alt="AUTHOR: Konstantin Filatov">
-            </a>
+        <div class="header" onclick="onHeaderClick()">
+            <div id="button_0" class="loc-item" data-article-src="pages/credits/index.html"
+                onclick="changeArticle(event)">
+                <div class="button-outer">
+                    <div class="button-inner">
+                        <span>credits</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="button_1" class="loc-item"
+                data-article-src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html"
+                onclick="changeArticle(event)">
+                <div class="button-outer">
+                    <div class="button-inner">
+                        <span>Writing an arbitrary size integer type in CS</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="button_2" class="loc-item"
+                data-article-src="pages/Writing_a_faster_ JSON_compatible_object_serialization_format_in_golang/index.html"
+                onclick="changeArticle(event)">
+                <div class="button-outer">
+                    <div class="button-inner">
+                        <span>Writing a faster JSON compatible object serialization format in golang</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="button_3" class="loc-item" data-article-src="pages/Test_Page/index.html"
+                onclick="changeArticle(event)">
+                <div class="button-outer">
+                    <div class="button-inner">
+                        <span>Test Page</span>
+                    </div>
+                </div>
+            </div>
+            <h3>Last generated: October 10, 2025 at 10:37 UTC</h3>
+        </div>
+        <div class="header-spacer">
         </div>
         <div class="middle-section">
-            <div class="list-of-content">
-                
-
-        <div id="button_0" class="loc-item"
-                    data-article-src="pages/credits/index.html"
-                    onclick="changeArticle(event)">
-                    <div class="button-outer">
-                        <div class="button-inner">
-                            <span>credits</span>
-                        </div>
-                    </div>
-                </div>
-    
-
-        <div id="button_1" class="loc-item"
-                    data-article-src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html"
-                    onclick="changeArticle(event)">
-                    <div class="button-outer">
-                        <div class="button-inner">
-                            <span>Writing an arbitrary size integer type in CS</span>
-                        </div>
-                    </div>
-                </div>
-    
-
-        <div id="button_2" class="loc-item"
-                    data-article-src="pages/Writing_a_faster_ JSON_compatible_object_serialization_format_in_golang/index.html"
-                    onclick="changeArticle(event)">
-                    <div class="button-outer">
-                        <div class="button-inner">
-                            <span>Writing a faster  JSON compatible object serialization format in golang</span>
-                        </div>
-                    </div>
-                </div>
-    
-
-        <div id="button_3" class="loc-item"
-                    data-article-src="pages/Test_Page/index.html"
-                    onclick="changeArticle(event)">
-                    <div class="button-outer">
-                        <div class="button-inner">
-                            <span>Test Page</span>
-                        </div>
-                    </div>
-                </div>
-    
-                <h3>Last generated: October 09, 2025 at 18:58 UTC</h3>
-            </div>
             <div class="article-body-wrapper">
                 <iframe id="article" class="article-body"
                     src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html" frameborder="0">
@@ -351,13 +351,19 @@
 </body>
 
 <script>
+    const header = document.querySelector(".header");
+    function onHeaderClick() {
+        header.classList.add("header-down");
+    }
+
     function changeArticle(event) {
+        event.stopPropagation();
         const newSrc = event.currentTarget.dataset.articleSrc;
         const article = document.getElementById("article");
 
         // lock all buttons
         const buttons = document.querySelectorAll(".loc-item")
-        buttons.forEach(btn => {btn.classList.add("disabled")})
+        buttons.forEach(btn => { btn.classList.add("disabled") })
 
         // play sound
         let soundPlayer = document.getElementById("sound-player");
@@ -368,10 +374,14 @@
         // Start fade out
         article.classList.add("scroll-to-new-page");
 
-        // When iframe finishes fading out, change src
+
+        // close the header
+        header.classList.remove("header-down");
+
+        // When iframe finishes animation, change src
         setTimeout(() => {
             article.src = newSrc;
-            buttons.forEach(btn => {btn.classList.remove("disabled")})
+            buttons.forEach(btn => { btn.classList.remove("disabled") })
         }, 400); // slightly more than CSS transition duration for smoothness
     }
 
@@ -380,6 +390,11 @@
         const article = document.getElementById("article");
         article.classList.remove("scroll-to-new-page");
     });
+
+    // Activate the dropdown header immediately to present menu to users
+    setTimeout(() => {
+        header.classList.add("header-down");
+    }, 100);
 </script>
 
 </html>

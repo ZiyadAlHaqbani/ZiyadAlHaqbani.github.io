@@ -32,7 +32,7 @@
             display: flex;
             flex-direction: row;
             background:
-                url(images/header_bg.png) bottom repeat-x;
+                url(images/header_bg.png ) bottom repeat-x;
             text-align: center;
             padding-inline-end: 2em;
             padding-inline-start: 20%;
@@ -84,7 +84,7 @@
             display: none;
         }
 
-        .loc-item.disabled{
+        .loc-item.disabled {
             pointer-events: none;
             opacity: 0.75;
             cursor: default;
@@ -113,7 +113,7 @@
             scrollbar-width: none;
             opacity: 1;
             transition:
-            transform 0.5s ease;
+                transform 0.5s ease;
 
             height: 110%;
             border-bottom-left-radius: 2rem;
@@ -313,7 +313,7 @@
 
         // lock all buttons
         const buttons = document.querySelectorAll(".loc-item")
-        buttons.forEach(btn => {btn.classList.add("disabled")})
+        buttons.forEach(btn => { btn.classList.add("disabled") })
 
         // play sound
         let soundPlayer = document.getElementById("sound-player");
@@ -327,7 +327,7 @@
         // When iframe finishes fading out, change src
         setTimeout(() => {
             article.src = newSrc;
-            buttons.forEach(btn => {btn.classList.remove("disabled")})
+            buttons.forEach(btn => { btn.classList.remove("disabled") })
         }, 400); // slightly more than CSS transition duration for smoothness
     }
 

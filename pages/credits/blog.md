@@ -1,7 +1,8 @@
 # Credits
 
 ## Sound
-click - 
+Eleven Labs:
+- click sound effect
 
 ## Images/Textures
 Noise texture generator - Created by Andrew Kordampalos:
@@ -14,4 +15,5 @@ Noise texture generator - Created by Andrew Kordampalos:
 Petr Knoll:
 - button style
 
-#### all uncredited media is made by me
+
+###### all uncredited media is made by me.

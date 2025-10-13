@@ -15,13 +15,8 @@
             top: 0;
             left: 0;
             height: 50%;
-            width: 99%;
+            width: 100%;
             padding: 1rem;
-
-            display: grid;
-            grid-template-columns: repeat(auto-fill, 10%);
-            grid-auto-rows: minmax(90px, auto);
-            gap: 0.75rem;
 
             justify-items: center;
             align-items: center;
@@ -59,6 +54,24 @@
             height: 200px;
         }
 
+        .blogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(16em, 1fr));
+            grid-auto-rows: minmax(16em, auto);
+            gap: 4em;
+
+            box-shadow: inset 0px 0px 16px black;
+
+            padding: 2em;
+            overflow: auto;
+            border-radius: 1rem;
+            max-height: 80%;
+
+            background:
+                url(images/bg.png);
+            z-index: -8;
+        }
+
         .middle-section {
             display: flex;
             flex-direction: row;
@@ -73,26 +86,10 @@
             margin: 0.25em;
         }
 
-        .list-of-content {
-            width: 20%;
-            height: 30%;
-            display: flex;
-            flex-direction: row;
-            overflow: auto;
-            scrollbar-width: none;
-
-            box-shadow: 0px 0px 4px black;
-        }
-
-        .list-of-content::-webkit-scrollbar {
-            display: none;
-        }
-
         .loc-item.disabled {
             pointer-events: none;
             opacity: 0.75;
             cursor: default;
-
         }
 
         .loc-item>* {
@@ -119,7 +116,6 @@
             transition:
                 transform 0.5s ease;
 
-            height: 105%;
             border-bottom-left-radius: 2rem;
             border-bottom-right-radius: 2rem;
             margin-inline: 4em;
@@ -164,130 +160,71 @@
             overflow: hidden;
         }
 
-        .loc-item {
-            all: unset;
-            cursor: pointer;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-            position: relative;
+        .loc-item-outer {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
             border-radius: 1rem;
-            background-color: rgba(0, 0, 0, 0.75);
-            box-shadow: -0.15em -0.15em 0.15em -0.075em rgba(5, 5, 5, 0.25),
-                0.0375em 0.0375em 0.0675em 0 rgba(5, 5, 5, 0.1);
-            margin: 1em;
-        }
 
-        .loc-item::after {
-            content: "";
-            position: absolute;
-            z-index: 0;
-            width: calc(100% + 0.3em);
-            height: calc(100% + 0.3em);
-            top: -0.15em;
-            left: -0.15em;
-            border-radius: inherit;
-            background: linear-gradient(-135deg,
-                    rgba(5, 5, 5, 0.5),
-                    transparent 20%,
-                    transparent 100%);
-            filter: blur(0.0125em);
-            opacity: 0.25;
-            mix-blend-mode: multiply;
-        }
+            width: 82.5%;
+            height: 82.5%;
+            box-sizing: border-box;
 
-        .loc-item .button-outer {
-            position: relative;
-            z-index: 1;
-            border-radius: inherit;
-            transition: box-shadow 300ms ease;
-            will-change: box-shadow;
-            box-shadow: 0 0.05em 0.05em -0.01em rgba(5, 5, 5, 1),
-                0 0.01em 0.01em -0.01em rgba(5, 5, 5, 0.5),
-                0.15em 0.3em 0.1em -0.01em rgba(5, 5, 5, 0.25);
-        }
-
-        .loc-item:hover .button-outer {
-            box-shadow: 0 0 0 0 rgba(5, 5, 5, 1), 0 0 0 0 rgba(5, 5, 5, 0.5),
-                0 0 0 0 rgba(5, 5, 5, 0.25);
-        }
-
-        .button-inner {
-            --inset: 0.035em;
-            position: relative;
-            z-index: 1;
-            border-radius: inherit;
-            padding: 1em 1.5em;
-            background-image: linear-gradient(135deg,
-                    rgba(230, 230, 230, 1),
-                    rgba(180, 180, 180, 1));
-            transition: box-shadow 300ms ease, clip-path 250ms ease,
-                background-image 250ms ease, transform 250ms ease;
-            will-change: box-shadow, clip-path, background-image, transform;
-            overflow: clip;
-            clip-path: inset(0 0 0 0 round 1rem);
+            background:
+                linear-gradient(to bottom,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    /* top rim highlight */
+                    rgba(0, 0, 0, 0.35) 100%
+                    /* bottom rim shadow */
+                );
             box-shadow:
-                /* 1 */
-                0 0 0 0 inset rgba(5, 5, 5, 0.1),
-                /* 2 */
-                -0.05em -0.05em 0.05em 0 inset rgba(5, 5, 5, 0.25),
-                /* 3 */
-                0 0 0 0 inset rgba(5, 5, 5, 0.1),
-                /* 4 */
-                0 0 0.05em 0.2em inset rgba(255, 255, 255, 0.25),
-                /* 5 */
-                0.025em 0.05em 0.1em 0 inset rgba(255, 255, 255, 1),
-                /* 6 */
-                0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
-                /* 7 */
-                -0.075em -0.25em 0.25em 0.1em inset rgba(5, 5, 5, 0.25);
+                inset 0 3px 12px rgba(0, 0, 0, 1),
+                /* inner dark shadow for depth */
+                inset 0 -3px 6px rgba(255, 255, 255, 0.215);
+            /* inner light for edge */
         }
 
-        .loc-item:hover .button-inner {
-            clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 1rem);
-            box-shadow:
-                /* 1 */
-                0.1em 0.15em 0.05em 0 inset rgba(5, 5, 5, 0.75),
-                /* 2 */
-                -0.025em -0.03em 0.05em 0.025em inset rgba(5, 5, 5, 0.5),
-                /* 3 */
-                0.25em 0.25em 0.2em 0 inset rgba(5, 5, 5, 0.5),
-                /* 4 */
-                0 0 0.05em 0.5em inset rgba(255, 255, 255, 0.15),
-                /* 5 */
-                0 0 0 0 inset rgba(255, 255, 255, 1),
-                /* 6 */
-                0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
-                /* 7 */
-                -0.075em -0.12em 0.2em 0.1em inset rgba(5, 5, 5, 0.25);
-        }
-
-        .loc-item .button-inner span {
+        .loc-item {
+            flex: 1;
+            display: flex;
+            cursor: pointer;
             position: relative;
-            z-index: 4;
-            font-family: "Inter", sans-serif;
-            letter-spacing: -0.05em;
-            font-weight: 500;
-            color: rgba(0, 0, 0, 0);
-            background-image: linear-gradient(135deg,
-                    rgba(25, 25, 25, 1),
-                    rgba(75, 75, 75, 1));
-            -webkit-background-clip: text;
-            background-clip: text;
-            transition: transform 250ms ease;
-            display: block;
-            will-change: transform;
-            text-shadow: rgba(0, 0, 0, 0.1) 0 0 0.1em;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+
+            border-radius: 1rem;
+            background: gray;
+            box-shadow: 0px 0px 8px black;
+
+            align-items: center;
+            justify-content: center;
+
+            height: 100%;
+            width: 100%;
+
+            transition: 0.1s ease;
         }
 
-        .loc-item:hover .button-inner span {
-            transform: scale(0.975);
+        .loc-item:hover {
+            scale: 0.9725;
         }
 
-        .loc-item:active .button-inner {
-            transform: scale(0.975);
+        .loc-item:active {
+            scale: 0.945;
+        }
+
+        .loc-item-inner {
+            display: flex;
+            width: 95%;
+            height: 95%;
+
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0px 0px 8px black;
+            text-wrap: 1;
+
+            border-radius: 1rem;
+            background: white;
         }
     </style>
 </head>
@@ -295,47 +232,50 @@
 <body>
     <div class="main-column">
         <div class="header" onclick="onHeaderClick()">
-            <div id="button_0" class="loc-item" data-article-src="pages/credits/index.html"
-                onclick="changeArticle(event)">
-                <div class="button-outer">
-                    <div class="button-inner">
-                        <span>credits</span>
+            <div class="blogs-grid">
+            
+
+        <div class="loc-item-outer">
+                    <div id="button_0" class="loc-item" data-article-src="pages/credits/index.html"
+                        onclick="changeArticle(event)">
+                        <div class="loc-item-inner">
+                            credits
+                        </div>
                     </div>
                 </div>
-            </div>
+    
 
-
-            <div id="button_1" class="loc-item"
-                data-article-src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html"
-                onclick="changeArticle(event)">
-                <div class="button-outer">
-                    <div class="button-inner">
-                        <span>Writing an arbitrary size integer type in CS</span>
+        <div class="loc-item-outer">
+                    <div id="button_1" class="loc-item" data-article-src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html"
+                        onclick="changeArticle(event)">
+                        <div class="loc-item-inner">
+                            Writing an arbitrary size integer type in CS
+                        </div>
                     </div>
                 </div>
-            </div>
+    
 
-
-            <div id="button_2" class="loc-item"
-                data-article-src="pages/Writing_a_faster_ JSON_compatible_object_serialization_format_in_golang/index.html"
-                onclick="changeArticle(event)">
-                <div class="button-outer">
-                    <div class="button-inner">
-                        <span>Writing a faster JSON compatible object serialization format in golang</span>
+        <div class="loc-item-outer">
+                    <div id="button_2" class="loc-item" data-article-src="pages/Writing_a_faster_ JSON_compatible_object_serialization_format_in_golang/index.html"
+                        onclick="changeArticle(event)">
+                        <div class="loc-item-inner">
+                            Writing a faster  JSON compatible object serialization format in golang
+                        </div>
                     </div>
                 </div>
-            </div>
+    
 
-
-            <div id="button_3" class="loc-item" data-article-src="pages/Test_Page/index.html"
-                onclick="changeArticle(event)">
-                <div class="button-outer">
-                    <div class="button-inner">
-                        <span>Test Page</span>
+        <div class="loc-item-outer">
+                    <div id="button_3" class="loc-item" data-article-src="pages/Test_Page/index.html"
+                        onclick="changeArticle(event)">
+                        <div class="loc-item-inner">
+                            Test Page
+                        </div>
                     </div>
                 </div>
+    
+            <h3>Last generated: October 13, 2025 at 18:59 UTC</h3>
             </div>
-            <h3>Last generated: October 10, 2025 at 10:37 UTC</h3>
         </div>
         <div class="header-spacer">
         </div>
@@ -346,6 +286,7 @@
                 </iframe>
             </div>
         </div>
+    </div>
     </div>
     <audio id="sound-player" src="click.mp3"></audio>
 </body>
@@ -382,13 +323,15 @@
         setTimeout(() => {
             article.src = newSrc;
             buttons.forEach(btn => { btn.classList.remove("disabled") })
-        }, 400); // slightly more than CSS transition duration for smoothness
+        }, 200); // slightly more than CSS transition duration for smoothness
     }
 
     // Fade-in after iframe has loaded
     document.getElementById("article").addEventListener("load", () => {
-        const article = document.getElementById("article");
-        article.classList.remove("scroll-to-new-page");
+        setTimeout(() => {
+            const article = document.getElementById("article");
+            article.classList.remove("scroll-to-new-page");
+        }, 400);
     });
 
     // Activate the dropdown header immediately to present menu to users

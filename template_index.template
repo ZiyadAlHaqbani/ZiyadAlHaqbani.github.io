@@ -10,60 +10,75 @@
             width: 100%;
         }
 
-        .main-column>* {
-            margin: 0.25em;
-        }
-
-        .header-wrapper {
-            position: relative;
-        }
-
-        .header-wrapper::after {
-
-            content: "";
+        div.header {
             position: absolute;
+            top: 0;
             left: 0;
-            right: 0;
-            bottom: 8px;
-            height: 16px;
-        }
+            height: 50%;
+            width: 100%;
+            padding: 1rem;
 
-        .header {
-            display: flex;
-            flex-direction: row;
+            justify-items: center;
+            align-items: center;
+
             background:
-                url(images/header_bg.png ) bottom repeat-x;
-            text-align: center;
-            padding-inline-end: 2em;
-            padding-inline-start: 20%;
-            padding-bottom: 22px;
-            z-index: inherit;
-        }
+                url(images/texture.png) repeat,
+                white;
+            border-bottom-right-radius: 1rem;
+            border-bottom-left-radius: 1rem;
+            transform: translateY(-85%);
+            z-index: 10;
 
-        .header img {
-            width: 50px;
-            height: 50px;
-            border-radius: 1rem;
-            background-color: rgba(0, 0, 0, 0.1);
             box-shadow: 0px 0px 2px black;
-            margin-inline: 0.5em;
-
-            margin-bottom: 0.125em;
-            margin-top: 0.125em;
-            z-index: inherit;
+            transition: 0.2s ease;
         }
 
-        .header img:hover {
-            box-shadow: 0px 0px 4px black;
+        div.header:hover {
+            transform: translateY(-82.5%);
             cursor: pointer;
         }
 
+        div.header-spacer {
+            display: flex;
+            height: 10%;
+        }
+
+        div.header-down {
+            /* overwrites the hover style */
+            transform: translateY(0%) !important;
+            cursor: default !important;
+        }
+
+        .header .loc-item {
+            max-width: 200px;
+            height: 200px;
+        }
+
+        .blogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(16em, 1fr));
+            grid-auto-rows: minmax(16em, auto);
+            gap: 4em;
+
+            box-shadow: inset 0px 0px 16px black;
+
+            padding: 2em;
+            overflow: auto;
+            border-radius: 1rem;
+            max-height: 80%;
+
+            background:
+                url(images/bg.png);
+            z-index: -8;
+        }
 
         .middle-section {
             display: flex;
             flex-direction: row;
             flex-grow: 1;
             border-radius: 1rem;
+
+            padding-bottom: 0.5em;
         }
 
         .middle-section>* {
@@ -71,24 +86,10 @@
             margin: 0.25em;
         }
 
-        .list-of-content {
-            width: 15%;
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
-            overflow: auto;
-            scrollbar-width: none;
-        }
-
-        .list-of-content::-webkit-scrollbar {
-            display: none;
-        }
-
         .loc-item.disabled {
             pointer-events: none;
             opacity: 0.75;
             cursor: default;
-
         }
 
         .loc-item>* {
@@ -115,7 +116,6 @@
             transition:
                 transform 0.5s ease;
 
-            height: 110%;
             border-bottom-left-radius: 2rem;
             border-bottom-right-radius: 2rem;
             margin-inline: 4em;
@@ -130,7 +130,7 @@
         }
 
         .article-body.scroll-to-new-page {
-            transform: translateY(-120%);
+            transform: translateY(-110%);
             pointer-events: none;
         }
 
@@ -142,7 +142,13 @@
             background: radial-gradient(circle at center, rgba(1, 1, 1, 0.1), rgba(0, 0, 0, 0.0));
         }
 
+        html,
         body {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
             background:
                 radial-gradient(circle at 25% 20%,
                     rgba(255, 255, 255, 0.5),
@@ -150,152 +156,90 @@
                 url(images/texture.png);
             background-blend-mode: multiply;
             width: 100%;
+            height: 100%;
             overflow: hidden;
         }
 
-        .loc-item {
-            all: unset;
-            cursor: pointer;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-            position: relative;
+        .loc-item-outer {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
             border-radius: 1rem;
-            background-color: rgba(0, 0, 0, 0.75);
-            box-shadow: -0.15em -0.15em 0.15em -0.075em rgba(5, 5, 5, 0.25),
-                0.0375em 0.0375em 0.0675em 0 rgba(5, 5, 5, 0.1);
-            margin: 1em;
-        }
 
-        .loc-item::after {
-            content: "";
-            position: absolute;
-            z-index: 0;
-            width: calc(100% + 0.3em);
-            height: calc(100% + 0.3em);
-            top: -0.15em;
-            left: -0.15em;
-            border-radius: inherit;
-            background: linear-gradient(-135deg,
-                    rgba(5, 5, 5, 0.5),
-                    transparent 20%,
-                    transparent 100%);
-            filter: blur(0.0125em);
-            opacity: 0.25;
-            mix-blend-mode: multiply;
-        }
+            width: 82.5%;
+            height: 82.5%;
+            box-sizing: border-box;
 
-        .loc-item .button-outer {
-            position: relative;
-            z-index: 1;
-            border-radius: inherit;
-            transition: box-shadow 300ms ease;
-            will-change: box-shadow;
-            box-shadow: 0 0.05em 0.05em -0.01em rgba(5, 5, 5, 1),
-                0 0.01em 0.01em -0.01em rgba(5, 5, 5, 0.5),
-                0.15em 0.3em 0.1em -0.01em rgba(5, 5, 5, 0.25);
-        }
-
-        .loc-item:hover .button-outer {
-            box-shadow: 0 0 0 0 rgba(5, 5, 5, 1), 0 0 0 0 rgba(5, 5, 5, 0.5),
-                0 0 0 0 rgba(5, 5, 5, 0.25);
-        }
-
-        .button-inner {
-            --inset: 0.035em;
-            position: relative;
-            z-index: 1;
-            border-radius: inherit;
-            padding: 1em 1.5em;
-            background-image: linear-gradient(135deg,
-                    rgba(230, 230, 230, 1),
-                    rgba(180, 180, 180, 1));
-            transition: box-shadow 300ms ease, clip-path 250ms ease,
-                background-image 250ms ease, transform 250ms ease;
-            will-change: box-shadow, clip-path, background-image, transform;
-            overflow: clip;
-            clip-path: inset(0 0 0 0 round 1rem);
+            background:
+                linear-gradient(to bottom,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    /* top rim highlight */
+                    rgba(0, 0, 0, 0.35) 100%
+                    /* bottom rim shadow */
+                );
             box-shadow:
-                /* 1 */
-                0 0 0 0 inset rgba(5, 5, 5, 0.1),
-                /* 2 */
-                -0.05em -0.05em 0.05em 0 inset rgba(5, 5, 5, 0.25),
-                /* 3 */
-                0 0 0 0 inset rgba(5, 5, 5, 0.1),
-                /* 4 */
-                0 0 0.05em 0.2em inset rgba(255, 255, 255, 0.25),
-                /* 5 */
-                0.025em 0.05em 0.1em 0 inset rgba(255, 255, 255, 1),
-                /* 6 */
-                0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
-                /* 7 */
-                -0.075em -0.25em 0.25em 0.1em inset rgba(5, 5, 5, 0.25);
+                inset 0 3px 12px rgba(0, 0, 0, 1),
+                /* inner dark shadow for depth */
+                inset 0 -3px 6px rgba(255, 255, 255, 0.215);
+            /* inner light for edge */
         }
 
-        .loc-item:hover .button-inner {
-            clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 1rem);
-            box-shadow:
-                /* 1 */
-                0.1em 0.15em 0.05em 0 inset rgba(5, 5, 5, 0.75),
-                /* 2 */
-                -0.025em -0.03em 0.05em 0.025em inset rgba(5, 5, 5, 0.5),
-                /* 3 */
-                0.25em 0.25em 0.2em 0 inset rgba(5, 5, 5, 0.5),
-                /* 4 */
-                0 0 0.05em 0.5em inset rgba(255, 255, 255, 0.15),
-                /* 5 */
-                0 0 0 0 inset rgba(255, 255, 255, 1),
-                /* 6 */
-                0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
-                /* 7 */
-                -0.075em -0.12em 0.2em 0.1em inset rgba(5, 5, 5, 0.25);
-        }
-
-        .loc-item .button-inner span {
+        .loc-item {
+            flex: 1;
+            display: flex;
+            cursor: pointer;
             position: relative;
-            z-index: 4;
-            font-family: "Inter", sans-serif;
-            letter-spacing: -0.05em;
-            font-weight: 500;
-            color: rgba(0, 0, 0, 0);
-            background-image: linear-gradient(135deg,
-                    rgba(25, 25, 25, 1),
-                    rgba(75, 75, 75, 1));
-            -webkit-background-clip: text;
-            background-clip: text;
-            transition: transform 250ms ease;
-            display: block;
-            will-change: transform;
-            text-shadow: rgba(0, 0, 0, 0.1) 0 0 0.1em;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+
+            border-radius: 1rem;
+            background: gray;
+            box-shadow: 0px 0px 8px black;
+
+            align-items: center;
+            justify-content: center;
+
+            height: 100%;
+            width: 100%;
+
+            transition: 0.1s ease;
         }
 
-        .loc-item:hover .button-inner span {
-            transform: scale(0.975);
+        .loc-item:hover {
+            scale: 0.9725;
         }
 
-        .loc-item:active .button-inner {
-            transform: scale(0.975);
+        .loc-item:active {
+            scale: 0.945;
+        }
+
+        .loc-item-inner {
+            display: flex;
+            width: 95%;
+            height: 95%;
+
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0px 0px 8px black;
+            text-wrap: 1;
+
+            border-radius: 1rem;
+            background: white;
         }
     </style>
 </head>
 
-<body class="gradient-background">
+<body>
     <div class="main-column">
-        <div class="header">
-            <a href="https://github.com/ZiyadAlhaqbani" target="_blank" rel="noopener noreferrer">
-                <img src="github-svgrepo-com.svg" alt="AUTHOR: Donnnno">
-            </a>
-            <a href="https://linkedin.com/in/ziyad-alhaqbani-a81194326" target="_blank" rel="noopener noreferrer">
-                <img src="linkedin-svgrepo-com.svg" alt="AUTHOR: Konstantin Filatov">
-            </a>
+        <div class="header" onclick="onHeaderClick()">
+            <div class="blogs-grid">
+            _blog_pages_
+            _time_stamp_
+            </div>
+        </div>
+        <div class="header-spacer">
         </div>
         <div class="middle-section">
-            <div class="list-of-content">
-                _blog_pages_
-                _time_stamp_
-            </div>
             <div class="article-body-wrapper">
                 <iframe id="article" class="article-body"
                     src="pages/Writing_an_arbitrary_size_integer_type_in_CS/index.html" frameborder="0">
@@ -303,11 +247,18 @@
             </div>
         </div>
     </div>
+    </div>
     <audio id="sound-player" src="click.mp3"></audio>
 </body>
 
 <script>
+    const header = document.querySelector(".header");
+    function onHeaderClick() {
+        header.classList.add("header-down");
+    }
+
     function changeArticle(event) {
+        event.stopPropagation();
         const newSrc = event.currentTarget.dataset.articleSrc;
         const article = document.getElementById("article");
 
@@ -324,18 +275,29 @@
         // Start fade out
         article.classList.add("scroll-to-new-page");
 
-        // When iframe finishes fading out, change src
+
+        // close the header
+        header.classList.remove("header-down");
+
+        // When iframe finishes animation, change src
         setTimeout(() => {
             article.src = newSrc;
             buttons.forEach(btn => { btn.classList.remove("disabled") })
-        }, 400); // slightly more than CSS transition duration for smoothness
+        }, 200); // slightly more than CSS transition duration for smoothness
     }
 
     // Fade-in after iframe has loaded
     document.getElementById("article").addEventListener("load", () => {
-        const article = document.getElementById("article");
-        article.classList.remove("scroll-to-new-page");
+        setTimeout(() => {
+            const article = document.getElementById("article");
+            article.classList.remove("scroll-to-new-page");
+        }, 400);
     });
+
+    // Activate the dropdown header immediately to present menu to users
+    setTimeout(() => {
+        header.classList.add("header-down");
+    }, 100);
 </script>
 
 </html>

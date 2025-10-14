@@ -66,6 +66,8 @@
             overflow: auto;
             border-radius: 1rem;
             max-height: 80%;
+            min-width: 3%;
+            max-width: 95%;
 
             background:
                 url(images/bg.png);
@@ -232,9 +234,9 @@
 <body>
     <div class="main-column">
         <div class="header" onclick="onHeaderClick()">
+            _time_stamp_
             <div class="blogs-grid">
             _blog_pages_
-            _time_stamp_
             </div>
         </div>
         <div class="header-spacer">

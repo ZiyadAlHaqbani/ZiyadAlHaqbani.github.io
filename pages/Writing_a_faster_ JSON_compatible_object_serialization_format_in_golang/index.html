@@ -3,14 +3,24 @@
 <head>
     <title>Writing a faster JSON compatible object serialization format in golang</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js/styles/github-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
 </head>
 
-<body></body>
+<body>
+    <div style="background: url(../../images/lined-paper-2.png); border-radius: 0.25 rem;" id="markdown">
+
+    </div>
+</body>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
+
+    console.log("testing converter package");
+    const converter = new showdown.Converter();
+    showdown.setFlavor('github');
+
     fetch("blog.md").then((res) => res.text()).then((text) => {
-        document.body.innerHTML = marked.parse(text);
+        document.getElementById("markdown").innerHTML = converter.makeHtml(text);
     })
 </script>
 
